@@ -7,6 +7,11 @@ flag = False
 
 
 def calculatefitness(population: list, n: int) -> list:
+    '''
+    :param population: A list of chromosomes
+    :param n: The number of queens to be placed on the chessboard
+    :return: The list of chromosomes with their fitness stored at the end of each chromosome
+    '''
     global fitnessNumber
     global flag
     for i in range(0, len(population)):
@@ -60,7 +65,7 @@ def population_gen(population: list, n: int) -> list:
         temp_population.append(new_population[random.randint(-1, 99)])  # five randomly chosen chromosomes
     sorted(temp_population, key=operator.itemgetter(n))     # fittest two chromosomes picked out of five
     crossover_pop = []
-    for i in range(0,2):
+    for i in range(0, 2):
         crossover_pop.append(temp_population[i])
     return crossover_pop
 
