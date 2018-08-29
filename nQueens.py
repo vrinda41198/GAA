@@ -1,3 +1,6 @@
+import random
+import operator
+
 def CalculateFitness(population:list,n:int) -> list:
     '''
 
@@ -25,20 +28,6 @@ def CalculateFitness(population:list,n:int) -> list:
         flag = True
 
     return population
-
-
-
-
-
-
-
-
-
-
-
-
-import random
-import operator
 
 
 def random_chrom(n: int) -> list:
