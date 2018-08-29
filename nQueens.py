@@ -1,5 +1,10 @@
 def CalculateFitness(population:list,n:int) -> list:
+    '''
 
+    :param population: A list of chromosomes
+    :param n: The number of queens to be placed on the chessboard
+    :return: The list of chromosomes with their fitness stored at the end of each chromosome
+    '''
     for i in range(0,len(population)):
 
         if population[i][n]==-1:  #i is one chromosome
