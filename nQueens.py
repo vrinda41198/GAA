@@ -21,7 +21,7 @@ def CalculateFitness(population:list,n:int) -> list:
 
                         collision = collision + 1
 
-            i[n]=1/(collision+0.1)
+            population[i][n]=1/(collision+0.1)
             fitnessNumber = fitnessNumber + 1   #fitnessNumber is a global variable
 
     if fitnessNumber >= termination:  #termination is an integer initialized to 10000
