@@ -44,8 +44,8 @@ def random_chrom(n: int) -> list:
     '''
     chrom = []  # one chromosome
     for j in range(0, n):
-        chrom[j] = random.randint(-1, n-1)  # generating genes randomly for the chromosome
-    chrom[n] = -1   # initialising fitness value
+        chrom.append(random.randint(0, n-1))   # generating genes randomly for the chromosome
+    chrom.append(-1)   # initialising fitness value
     return chrom
 
 
@@ -64,8 +64,20 @@ def population_gen(population: list, n: int) -> list:
     for i in range(0, 5):
         temp_population.append(new_population[random.randint(-1, 99)])  # five randomly chosen chromosomes
     sorted(temp_population, key=operator.itemgetter(n))     # fittest two chromosomes picked out of five
+    print(temp_population)
+    print("HAHA")
     crossover_pop = []
     for i in range(0, 2):
         crossover_pop.append(temp_population[i])
     return crossover_pop
 
+
+def main():
+    n = 6
+    population = []
+    val = population_gen(population, n)
+    print(val)
+    print("done")
+
+
+main()
