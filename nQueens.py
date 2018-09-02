@@ -93,20 +93,20 @@ def crossover(parents: list, n: int) -> list:
     for i in range(0, 2):
         print(index)
         if index == 0:
-            children[i] = parents[(i+1) % 2]
+            children[i] = parents[(i+1) % 2]    #Children remain the same as parents
         elif index == n:
-            children[i] = parents[i]
+            children[i] = parents[i]  #Children remain the same as parents
         else:
             for j in range(0, index):
-                children[i].append(parents[i][j])
+                children[i].append(parents[i][j])   #copying in child uptil index
             k = index
             j = index
-            while j < n:
-                val = parents[((i + 1) % 2)][k]
-                if val not in children[0:index]:
+            while j < n:                            #till j, the child is filled
+                val = parents[((i + 1) % 2)][k]    #other parent's index k baad wali value
+                if val not in children[0:j]:
                     children[i].append(val)
                     j += 1
-                k = (k+1) % n
+                k = (k+1) % n                       #other parent ka next element
 
     return children
 
