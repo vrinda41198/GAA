@@ -87,8 +87,7 @@ def crossover(parents: list, n: int) -> list:
     :param n: length of one chromosome
     :return: children created by crossover
     """
-    cross_point = random.randint(0, n)
-    index = cross_point
+    index = random.randint(0, n)
     children = []
     for i in range(0, 2):
         print(index)
@@ -111,24 +110,24 @@ def crossover(parents: list, n: int) -> list:
     return children
 
 
-def mutation(permutation: list, mutation_prob: float) -> list:
+def mutation(permutation: list, mutation_prob: float, n: int) -> list:
     """"
     :param permutation: chromosome post recombination
     :param mutation_prob: mutation probability
+    :param n: length of one chromosome
     :return: mutated chromosome
     """
-    n = len(permutation[0])
-    rnd = random.random()
-    if rnd < mutation_prob:
+    rnd = random.random(0, 1)   # picking a random number between 0 and 1
+    if rnd < mutation_prob:     # checking if mutation is allowed
         loci1 = random.randint(0, n - 2)
-        loci2 = random.randint(0, n - 2)
+        loci2 = random.randint(0, n - 2)    # picking two mutation points in each chromosome
         while loci2 == loci1:
             loci2 = random.randint(0, n - 2)
         result = copy.deepcopy(permutation)
         result[0][loci1], result[0][loci2] = result[0][loci2], result[0][loci1]
-        result[1][loci1], result[1][loci2] = result[1][loci2], result[1][loci1]
+        result[1][loci1], result[1][loci2] = result[1][loci2], result[1][loci1]     # performing swap mutation
         return result
-    return permutation
+    return permutation  # returning unmutated population in case mutation does not occur
 
 
 def selection(population: list, n: int) -> list:
@@ -150,7 +149,7 @@ def main():
     while True:
         crossover_val = population_gen(population, count, n)
         crossover_pop = crossover(crossover_val, n)
-        children = mutation(crossover_pop, mutation_prob)
+        children = mutation(crossover_pop, mutation_prob, n)
         i = 0
         while i != 2:
             population.append(children[i])
