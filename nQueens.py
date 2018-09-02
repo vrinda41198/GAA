@@ -22,7 +22,6 @@ def random_chrom(n: int) -> list:
         if j == n:
             break
     chrom.append(-1)   # initialising fitness value
-    print(chrom)
     return chrom
 
 
@@ -50,8 +49,9 @@ def calculatefitness(population: list, n: int) -> list:
             fitnessNumber += 1  # fitnessNumber is a global variable
 
     if fitnessNumber >= termination:  # termination is an integer initialized to 10000
-        population.sort(key=operator.itemgetter(n))
-        print population[0]
+        population.sort(key=operator.itemgetter(n), reverse=True)
+        print(population[0])
+        exit()
 
     return population
 
@@ -75,8 +75,6 @@ def population_gen(population: list, count: int, n: int) -> list:
     for i in range(0, 5):
         temp_population.append(new_population[random.randint(0, 99)])  # five randomly chosen chromosomes
     temp_population.sort(key=operator.itemgetter(n), reverse=True)     # fittest two chromosomes picked out of five
-    print(temp_population)
-    print("HAHA")
     crossover_pop = []
     for i in range(0, 2):
         crossover_pop.append(temp_population[i])
