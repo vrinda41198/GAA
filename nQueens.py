@@ -70,6 +70,7 @@ def population_gen(population: list, n: int) -> list:
         crossover_pop.append(temp_population[i])
     return crossover_pop
 
+
 def mutation(permutation):
     n = len(permutation[0])
     rnd = random.random()
