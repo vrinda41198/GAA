@@ -43,9 +43,16 @@ def random_chrom(n: int) -> list:
     :return: randomly generated chromosome.
     '''
     chrom = []  # one chromosome
-    for j in range(0, n):
-        chrom.append(random.randint(0, n-1))   # generating genes randomly for the chromosome
+    j = 0
+    while True:
+        temp = random.randint(0, n-1)
+        if temp not in chrom:
+            chrom.append(temp)   # generating genes randomly for the chromosome
+            j += 1
+        if j == n:
+            break
     chrom.append(-1)   # initialising fitness value
+    print(chrom)
     return chrom
 
 
