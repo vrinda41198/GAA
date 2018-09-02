@@ -7,6 +7,26 @@ termination = 10000
 flag = False
 
 
+def random_chrom(n: int) -> list:
+    """
+    Random chromosome generation
+    :param n: number of queens to be placed on the chess board
+    :return: randomly generated chromosome.
+    """
+    chrom = []  # one chromosome
+    j = 0
+    while True:
+        temp = random.randint(0, n-1)
+        if temp not in chrom:
+            chrom.append(temp)   # generating genes randomly for the chromosome
+            j += 1
+        if j == n:
+            break
+    chrom.append(-1)   # initialising fitness value
+    print(chrom)
+    return chrom
+
+
 def calculatefitness(population: list, n: int) -> list:
     """
     :param population: A list of chromosomes
@@ -37,37 +57,21 @@ def calculatefitness(population: list, n: int) -> list:
     return population
 
 
-def random_chrom(n: int) -> list:
-    """
-    Random chromosome generation
-    :param n: number of queens to be placed on the chess board
-    :return: randomly generated chromosome.
-    """
-    chrom = []  # one chromosome
-    j = 0
-    while True:
-        temp = random.randint(0, n-1)
-        if temp not in chrom:
-            chrom.append(temp)   # generating genes randomly for the chromosome
-            j += 1
-        if j == n:
-            break
-    chrom.append(-1)   # initialising fitness value
-    print(chrom)
-    return chrom
-
-
-def population_gen(population: list, n: int) -> list:
+def population_gen(population: list, count: int, n: int) -> list:
     """
     Initial population generation
     :param population: initial population of chromosomes
+    :param count: count of the generation created
     :param n: number of queens to be placed on the chess board
     :return: fittest two chromosomes out of random five to be sent for crossover.
     """
-    for i in range(0, 100):
-        chrom = random_chrom(n)
-        population.append(chrom)    # generating 100 random chromosomes as initial population
-    new_population = calculatefitness(population, n)    # calculating fitness function
+    if count == 1:
+        for i in range(0, 100):
+            chrom = random_chrom(n)
+            population.append(chrom)    # generating 100 random chromosomes as initial population
+        new_population = calculatefitness(population, n)    # calculating fitness function
+    else:
+        new_population = population
     temp_population = []
     for i in range(0, 5):
         temp_population.append(new_population[random.randint(0, 99)])  # five randomly chosen chromosomes
@@ -78,6 +82,36 @@ def population_gen(population: list, n: int) -> list:
     for i in range(0, 2):
         crossover_pop.append(temp_population[i])
     return crossover_pop
+
+
+def crossover(parents: list, n: int) -> list:
+    """
+    :param parents: list of chromosomes involved in crossover
+    :param n: length of one chromosome
+    :return: children created by crossover
+    """
+    cross_point = random.randint(0, n)
+    index = cross_point
+    children = []
+    for i in range(0, 2):
+        print(index)
+        if index == 0:
+            children[i] = parents[(i+1) % 2]
+        elif index == n:
+            children[i] = parents[i]
+        else:
+            for j in range(0, index):
+                children[i].append(parents[i][j])
+            k = index
+            j = index
+            while j < n:
+                val = parents[((i + 1) % 2)][k]
+                if val not in children[0:index]:
+                    children[i].append(val)
+                    j += 1
+                k = (k+1) % n
+
+    return children
 
 
 def mutation(permutation: list, mutation_prob: float) -> list:
@@ -99,32 +133,6 @@ def mutation(permutation: list, mutation_prob: float) -> list:
         return result
     return permutation
 
-def crossover(parents, n):
-    cross_point = random.randint(0,n)
-    index = cross_point
-    children = [[], []]
-
-    for i in range(0,2):
-        print(index)
-        if index == 0:
-            children[i] = parents[(i+1)%2]
-        elif index == n:
-            children[i] = parents[i]
-        else:
-            for j in range(0, index):
-                children[i].append(parents[i][j])
-            k = index
-            j = index
-            while j < n:
-                val = parents[((i + 1) % 2)][k]
-                if val not in children[0:index]:
-                    children[i].append(val)
-                    j += 1
-                k = (k+1)%n
-
-    return children
-
-
 
 def selection(population: list, n: int) -> list:
     """
@@ -138,11 +146,19 @@ def selection(population: list, n: int) -> list:
 
 
 def main():
-    n = 6
+    n = int(input("Enter the value of n"))
+    mutation_prob = float(input("Enter the value of mutation probability"))
     population = []
-    val = population_gen(population, n)
-    print(val)
-    print("done")
+    count = 1
+    while True:
+        crossover_val = population_gen(population, count, n)
+        crossover_pop = crossover(crossover_val, n)
+        children = mutation(crossover_pop, mutation_prob)
+        i = 0
+        while i != 2:
+            population.append(children[i])
+        population = selection(population, n)
+        count += 1
 
-
+        
 main()
