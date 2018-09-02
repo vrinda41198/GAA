@@ -27,12 +27,6 @@ def crossover(parents, n):
     return children
 
 
-def main():
-    check_list = crossover([[1,3,5,2,6,4,7,8], [8,7,6,5,4,3,2,1]], 8)
-    print(check_list[0])
-    print(2)
-    print(check_list[1])
-
 
 
 
