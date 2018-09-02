@@ -4,7 +4,6 @@ import copy
 
 fitnessNumber = 0
 termination = 10000
-flag = False
 
 
 def calculatefitness(population: list, n: int) -> list:
@@ -14,7 +13,6 @@ def calculatefitness(population: list, n: int) -> list:
     :return: The list of chromosomes with their fitness stored at the end of each chromosome
     '''
     global fitnessNumber
-    global flag
     for i in range(0, len(population)):
 
         if population[i][n] == -1:  # i is one chromosome
@@ -32,7 +30,8 @@ def calculatefitness(population: list, n: int) -> list:
             fitnessNumber += 1  # fitnessNumber is a global variable
 
     if fitnessNumber >= termination:  # termination is an integer initialized to 10000
-        flag = True
+        population.sort(key=operator.itemgetter(n))
+        print population[0]
 
     return population
 
