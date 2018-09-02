@@ -8,11 +8,11 @@ flag = False
 
 
 def calculatefitness(population: list, n: int) -> list:
-    '''
+    """
     :param population: A list of chromosomes
     :param n: The number of queens to be placed on the chessboard
     :return: The list of chromosomes with their fitness stored at the end of each chromosome
-    '''
+    """
     global fitnessNumber
     global flag
     for i in range(0, len(population)):
@@ -38,11 +38,11 @@ def calculatefitness(population: list, n: int) -> list:
 
 
 def random_chrom(n: int) -> list:
-    '''
+    """
     Random chromosome generation
     :param n: number of queens to be placed on the chess board
     :return: randomly generated chromosome.
-    '''
+    """
     chrom = []  # one chromosome
     j = 0
     while True:
@@ -58,20 +58,20 @@ def random_chrom(n: int) -> list:
 
 
 def population_gen(population: list, n: int) -> list:
-    '''
+    """
     Initial population generation
     :param population: initial population of chromosomes
     :param n: number of queens to be placed on the chess board
     :return: fittest two chromosomes out of random five to be sent for crossover.
-    '''
+    """
     for i in range(0, 100):
         chrom = random_chrom(n)
         population.append(chrom)    # generating 100 random chromosomes as initial population
     new_population = calculatefitness(population, n)    # calculating fitness function
     temp_population = []
     for i in range(0, 5):
-        temp_population.append(new_population[random.randint(-1, 99)])  # five randomly chosen chromosomes
-    sorted(temp_population, key=operator.itemgetter(n))     # fittest two chromosomes picked out of five
+        temp_population.append(new_population[random.randint(0, 99)])  # five randomly chosen chromosomes
+    temp_population.sort(key=operator.itemgetter(n), reverse=True)     # fittest two chromosomes picked out of five
     print(temp_population)
     print("HAHA")
     crossover_pop = []
@@ -80,10 +80,14 @@ def population_gen(population: list, n: int) -> list:
     return crossover_pop
 
 
-def mutation(permutation):
+def mutation(permutation: list, mutation_prob: float) -> list:
+    """"
+    :param permutation: chromosome post recombination
+    :param mutation_prob: mutation probability
+    :return: mutated chromosome
+    """
     n = len(permutation[0])
     rnd = random.random()
-    mutation_prob = 0.8
     if rnd < mutation_prob:
         loci1 = random.randint(0, n - 2)
         loci2 = random.randint(0, n - 2)
@@ -94,6 +98,17 @@ def mutation(permutation):
         result[1][loci1], result[1][loci2] = result[1][loci2], result[1][loci1]
         return result
     return permutation
+
+
+def selection(population: list, n: int) -> list:
+    """
+    :param population: chromosome population post crossover and mutation
+    :param n: length of the chromosome
+    :return: best hundred of the population
+    """
+    population.sort(key=operator.itemgetter(n), reverse=True)
+    population = population[:len(population) - 2]
+    return population
 
 
 def main():
