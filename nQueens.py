@@ -142,7 +142,8 @@ def selection(population: list, n: int) -> list:
     :param n: The number of queens to be placed on the chessboard
     :return: best hundred of the population
     """
-    population.sort(key=operator.itemgetter(n), reverse=True)
+    population.sort(key=operator.itemgetter(n), reverse=True)     # ERROR IS IN THIS LINE
+    print(population)
     population = population[:len(population) - 2]
     return population
 
