@@ -9,7 +9,7 @@ termination = 10000
 def random_chrom(n: int) -> list:
     """
     Random chromosome generation
-    :param n: number of queens to be placed on the chess board
+    :param n: The number of queens to be placed on the chess board
     :return: randomly generated chromosome.
     """
     chrom = []  # one chromosome
@@ -61,7 +61,7 @@ def population_gen(population: list, count: int, n: int) -> list:
     Initial population generation
     :param population: initial population of chromosomes
     :param count: count of the generation created
-    :param n: number of queens to be placed on the chess board
+    :param n: The number of queens to be placed on the chessboard
     :return: fittest two chromosomes out of random five to be sent for crossover.
     """
     if count == 1:
@@ -81,43 +81,48 @@ def population_gen(population: list, count: int, n: int) -> list:
     return crossover_pop
 
 
-def crossover(parents: list, n: int) -> list:
+def crossover(parents: list, recomb_prob: float, n: int) -> list:
     """
     :param parents: list of chromosomes involved in crossover
-    :param n: length of one chromosome
+    :param recomb_prob: Recombination probability
+    :param n: The number of queens to be placed on the chessboard
     :return: children created by crossover
     """
+    rnd = random.random()  # picking a random number between 0 and 1
     index = random.randint(0, n)
     children = []
-    for i in range(0, 2):
-        print(index)
-        if index == 0:
-            children[i] = parents[(i+1) % 2]    #Children remain the same as parents
-        elif index == n:
-            children[i] = parents[i]  #Children remain the same as parents
-        else:
-            for j in range(0, index):
-                children[i].append(parents[i][j])   #copying in child uptil index
-            k = index
-            j = index
-            while j < n:                            #till j, the child is filled
-                val = parents[((i + 1) % 2)][k]    #other parent's index k baad wali value
-                if val not in children[0:j]:
-                    children[i].append(val)
-                    j += 1
-                k = (k+1) % n                       #other parent ka next element
+    if rnd <= recomb_prob:
+        for i in range(0, 2):
+            temp_children = []
+            if index == 0:
+                temp_children = parents[(i+1) % 2]    # Children remain the same as parents in the opposite index
+            elif index == n:
+                temp_children = parents[i]  # Children remain the same as parents
+            else:
+                for j in range(0, index):
+                    temp_children.append(parents[i][j])   # Copying genes from parent to child until position 'index'
+                k = index
+                j = index
+                while j < n:                           # to fill the remaining genes of the child
+                    val = parents[((i + 1) % 2)][k]    # genes of parents post the position 'index'
+                    if val not in temp_children[0:j]:
+                        temp_children.append(val)
+                        j += 1
+                    k = (k+1) % n
+            children.append(temp_children)
 
-    return children
+        return children
+    return parents
 
 
 def mutation(permutation: list, mutation_prob: float, n: int) -> list:
     """"
     :param permutation: chromosome post recombination
     :param mutation_prob: mutation probability
-    :param n: length of one chromosome
+    :param n: The number of queens to be placed on the chessboard
     :return: mutated chromosome
     """
-    rnd = random.random(0, 1)   # picking a random number between 0 and 1
+    rnd = random.random()   # picking a random number between 0 and 1
     if rnd < mutation_prob:     # checking if mutation is allowed
         loci1 = random.randint(0, n - 2)
         loci2 = random.randint(0, n - 2)    # picking two mutation points in each chromosome
@@ -133,7 +138,7 @@ def mutation(permutation: list, mutation_prob: float, n: int) -> list:
 def selection(population: list, n: int) -> list:
     """
     :param population: chromosome population post crossover and mutation
-    :param n: length of the chromosome
+    :param n: The number of queens to be placed on the chessboard
     :return: best hundred of the population
     """
     population.sort(key=operator.itemgetter(n), reverse=True)
@@ -143,18 +148,22 @@ def selection(population: list, n: int) -> list:
 
 def main():
     n = int(input("Enter the value of n"))
+    recomb_prob = float(input("Enter the value of recombination probability"))
     mutation_prob = float(input("Enter the value of mutation probability"))
+
     population = []
     count = 1
     while True:
         crossover_val = population_gen(population, count, n)
-        crossover_pop = crossover(crossover_val, n)
+        crossover_pop = crossover(crossover_val, recomb_prob, n)
         children = mutation(crossover_pop, mutation_prob, n)
         i = 0
         while i != 2:
             population.append(children[i])
+            i += 1
         population = selection(population, n)
         count += 1
+        exit()
 
         
 main()
