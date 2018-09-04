@@ -89,6 +89,8 @@ def crossover(parents: list, recomb_prob: float, n: int) -> list:
     :param n: The number of queens to be placed on the chessboard
     :return: children created by crossover
     """
+    print("Parents")
+    print(parents)
     rnd = random.random()  # picking a random number between 0 and 1
     index = random.randint(0, n)
     children = []
@@ -111,7 +113,8 @@ def crossover(parents: list, recomb_prob: float, n: int) -> list:
                         j += 1
                     k = (k+1) % n
             children.append(temp_children)
-
+        print("Children")
+        print(children)
         return children
     return parents
 
@@ -143,7 +146,6 @@ def selection(population: list, n: int) -> list:
     :return: best hundred of the population
     """
     population.sort(key=operator.itemgetter(n), reverse=True)     # ERROR IS IN THIS LINE
-    print(population)
     population = population[:len(population) - 2]
     return population
 
