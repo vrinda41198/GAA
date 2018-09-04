@@ -146,7 +146,6 @@ def selection(population: list, n: int) -> list:
     :return: best hundred of the population
     """
     population.sort(key=operator.itemgetter(n), reverse=True)     # ERROR IS IN THIS LINE
-    print(population)
     population = population[:len(population) - 2]
     return population
 
