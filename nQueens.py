@@ -74,7 +74,7 @@ def population_gen(population: list, count: int, n: int) -> list:
     #    new_population = population
     temp_population = []
     for i in range(0, 5):
-        temp_population.append(population[random.randint(0, 99)])  # five randomly chosen chromosomes
+        temp_population.append(population[random.randint(0, 99)])  # five randomly chosen chromosomes #condition on index of chromosomes selected
     temp_population.sort(key=operator.itemgetter(n), reverse=True)     # fittest two chromosomes picked out of five
     crossover_pop = []
     for i in range(0, 2):
@@ -89,8 +89,6 @@ def crossover(parents: list, recomb_prob: float, n: int) -> list:
     :param n: The number of queens to be placed on the chessboard
     :return: children created by crossover
     """
-    print("Parents")
-    print(parents)
     rnd = random.random()  # picking a random number between 0 and 1
     index = random.randint(0, n)
     children = []
@@ -112,9 +110,10 @@ def crossover(parents: list, recomb_prob: float, n: int) -> list:
                         temp_children.append(val)
                         j += 1
                     k = (k+1) % n
+            temp_children.append(-1)
             children.append(temp_children)
-        print("Children")
-        print(children)
+
+        children = calculatefitness(children, n)
         return children
     return parents
 
