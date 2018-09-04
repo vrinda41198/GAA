@@ -25,13 +25,13 @@ def random_chrom(n: int) -> list:
     return chrom
 
 
-def calculatefitness(population: list, n: int) -> list:
+def calculatefitness(population: list, n: int, args: dict) -> list:
     """
     :param population: A list of chromosomes
     :param n: The number of queens to be placed on the chessboard
     :return: The list of chromosomes with their fitness stored at the end of each chromosome
     """
-    pass
+    
 
 
 def population_gen(population: list, count: int, n: int) -> list:

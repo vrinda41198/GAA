@@ -2,7 +2,7 @@ import random
 import operator
 import copy
 
-fitnessNumber = 0
+fitnessNumber = 0       # number of fitness functions calculated
 termination = 10000
 
 
@@ -74,7 +74,8 @@ def population_gen(population: list, count: int, n: int) -> list:
     #    new_population = population
     temp_population = []
     for i in range(0, 5):
-        temp_population.append(population[random.randint(0, 99)])  # five randomly chosen chromosomes #condition on index of chromosomes selected
+        temp_population.append(population[random.randint(0, 99)])  # five randomly chosen chromosomes
+                                                                   # CONDITION ON INDEX OF SELECTED CHROMOSOMES
     temp_population.sort(key=operator.itemgetter(n), reverse=True)     # fittest two chromosomes picked out of five
     crossover_pop = []
     for i in range(0, 2):
@@ -90,7 +91,7 @@ def crossover(parents: list, recomb_prob: float, n: int) -> list:
     :return: children created by crossover
     """
     rnd = random.random()  # picking a random number between 0 and 1
-    index = random.randint(0, n)
+    index = random.randint(0, n-1)
     children = []
     if rnd <= recomb_prob:
         for i in range(0, 2):
@@ -127,10 +128,10 @@ def mutation(permutation: list, mutation_prob: float, n: int) -> list:
     """
     rnd = random.random()   # picking a random number between 0 and 1
     if rnd < mutation_prob:     # checking if mutation is allowed
-        loci1 = random.randint(0, n - 2)
-        loci2 = random.randint(0, n - 2)    # picking two mutation points in each chromosome
+        loci1 = random.randint(0, n - 1) # WHY N-2 AND NOT N-1
+        loci2 = random.randint(0, n - 1)    # picking two mutation points in each chromosome
         while loci2 == loci1:
-            loci2 = random.randint(0, n - 2)
+            loci2 = random.randint(0, n - 1)
         result = copy.deepcopy(permutation)
         result[0][loci1], result[0][loci2] = result[0][loci2], result[0][loci1]
         result[1][loci1], result[1][loci2] = result[1][loci2], result[1][loci1]     # performing swap mutation
