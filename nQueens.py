@@ -2,7 +2,7 @@ import random
 import operator
 import copy
 
-fitnessNumber = 0
+fitnessNumber = 0       # number of fitness functions calculated
 termination = 10000
 
 
@@ -77,8 +77,8 @@ def crossover_sel(population: list) -> list:
     """
     temp_population = []
     for i in range(0, 5):
-        temp_population.append(population[random.randint(0, 99)])  # five randomly chosen chromosomes
-    temp_population.sort(key=operator.itemgetter(n), reverse=True)  # fittest two chromosomes picked out of five
+        temp_population.append(population[random.randint(0, 99)])  # five randomly chosen chromosomes #condition on index of chromosomes selected
+    temp_population.sort(key=operator.itemgetter(n), reverse=True)     # fittest two chromosomes picked out of five
     crossover_pop = []
     for i in range(0, 2):
         crossover_pop.append(temp_population[i])
@@ -93,7 +93,7 @@ def crossover(parents: list, recomb_prob: float, n: int) -> list:
     :return: children created by crossover
     """
     rnd = random.random()  # picking a random number between 0 and 1
-    index = random.randint(0, n)
+    index = random.randint(0, n-1)
     children = []
     if rnd <= recomb_prob:
         for i in range(0, 2):
@@ -113,8 +113,10 @@ def crossover(parents: list, recomb_prob: float, n: int) -> list:
                         temp_children.append(val)
                         j += 1
                     k = (k+1) % n
+            temp_children.append(-1)
             children.append(temp_children)
 
+        children = calculatefitness(children, n)
         return children
     return parents
 
@@ -128,10 +130,10 @@ def mutation(permutation: list, mutation_prob: float, n: int) -> list:
     """
     rnd = random.random()   # picking a random number between 0 and 1
     if rnd < mutation_prob:     # checking if mutation is allowed
-        loci1 = random.randint(0, n - 2)
-        loci2 = random.randint(0, n - 2)    # picking two mutation points in each chromosome
+        loci1 = random.randint(0, n - 1) # WHY N-2 AND NOT N-1
+        loci2 = random.randint(0, n - 1)    # picking two mutation points in each chromosome
         while loci2 == loci1:
-            loci2 = random.randint(0, n - 2)
+            loci2 = random.randint(0, n - 1)
         result = copy.deepcopy(permutation)
         result[0][loci1], result[0][loci2] = result[0][loci2], result[0][loci1]
         result[1][loci1], result[1][loci2] = result[1][loci2], result[1][loci1]     # performing swap mutation
@@ -146,7 +148,6 @@ def selection(population: list, n: int) -> list:
     :return: best hundred of the population
     """
     population.sort(key=operator.itemgetter(n), reverse=True)     # ERROR IS IN THIS LINE
-    print(population)
     population = population[:len(population) - 2]
     return population
 
