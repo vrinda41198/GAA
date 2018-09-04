@@ -28,15 +28,15 @@ def random_chrom(n: int) -> list:
 def calculatefitness(population: list, n: int, args: dict) -> list:
     """
     :param population: A list of chromosomes
-    :param n: The number of queens to be placed on the chessboard
+    :param n: The total number of items in the complete list
     :return: The list of chromosomes with their fitness stored at the end of each chromosome
     """
     for i in range(0, len(population)):
-        if population[i][n-1] == -1:
-            population[i][n-1] = 0
-            for j in range(0, n-1):
-                if population[i][j] == 1:
-                    population[i][n-1] += args[j][0]
+        if population[i][n] == -1:    # calculate fitness (total value) of set of chosen items if not already calculated
+            population[i][n] = 0
+            for j in range(0, n):
+                if population[i][j] == 1:       # add the value of an item to the fitness func if it's chosen
+                    population[i][n] += args[j][1]
     return population
 
 
