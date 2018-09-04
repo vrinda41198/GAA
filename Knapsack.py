@@ -81,9 +81,9 @@ def main():
         print("Enter the value of item", i + 1)
         item_val = float(input())
         args[i].append((item_wt, item_val))     # args = { index : (item_wt,item_val) }
-
+    population_gen(population, args, total_weight, n)
     while True:
-        crossover_val = population_gen(population, args, total_weight, count, n)
+        crossover_val = population_gen(population, args, total_weight, n)
         crossover_pop = crossover(crossover_val, recomb_prob, n)
         children = mutation(crossover_pop, mutation_prob, n)
         i = 0
