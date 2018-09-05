@@ -162,7 +162,7 @@ def selection(population: list, n: int) -> list:
     :return: Best hundred of the population
     """
     population.sort(key=operator.itemgetter(n), reverse=True)
-    population = population[:len(population) - 2]
+    population = population[:len(population) - 2]   # removing least fittest two from population
     return population
 
 
