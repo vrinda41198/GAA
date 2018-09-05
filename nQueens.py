@@ -2,7 +2,7 @@ import random
 import operator
 import copy
 
-fitnessNumber = 0       # number of fitness functions calculated
+fitnessNumber = 0
 termination = 10000
 
 
@@ -46,11 +46,18 @@ def calculatefitness(population: list, n: int) -> list:
                         collision = collision + 1
 
             population[i][n] = 1/(collision + 0.1)
-            fitnessNumber += 1  # fitnessNumber is a global variable
+            fitnessNumber += 1  # number of fitness functions calculated
 
-    if fitnessNumber >= termination:  # termination is an integer initialized to 10000
+    if fitnessNumber >= termination:  # termination condition
         population.sort(key=operator.itemgetter(n), reverse=True)
-        print(population[0])
+        print("The final answer is")
+        print("Chromosome:")
+        chrom = []
+        for i in range(0, n):
+            chrom.append(population[0][i])
+        print(chrom)
+        print("Fitness value:")
+        print(population[0][n])
         exit()
 
     return population
@@ -70,14 +77,21 @@ def population_gen(population: list, n: int):
         population = calculatefitness(population, n)    # calculating fitness function
 
 
-def crossover_sel(population: list) -> list:
+def crossover_sel(population: list, n: int) -> list:
     """
     :param population: population of chromosomes
+    :param n: The number of queens to be placed on the chessboard
     :return: chromosomes selected for crossover
     """
     temp_population = []
-    for i in range(0, 5):
-        temp_population.append(population[random.randint(0, 99)])  # five randomly chosen chromosomes #condition on index of chromosomes selected
+    temp_index = []
+    i = 0
+    while i < 5:
+        j = random.randint(0, 99)
+        if j not in temp_index:
+            temp_index.append(j)
+            temp_population.append(population[j])  # five randomly chosen chromosomes
+            i += 1
     temp_population.sort(key=operator.itemgetter(n), reverse=True)     # fittest two chromosomes picked out of five
     crossover_pop = []
     for i in range(0, 2):
@@ -113,7 +127,8 @@ def crossover(parents: list, recomb_prob: float, n: int) -> list:
                         temp_children.append(val)
                         j += 1
                     k = (k+1) % n
-            temp_children.append(-1)
+            if len(temp_children) != n+1:
+                temp_children.append(-1)
             children.append(temp_children)
 
         children = calculatefitness(children, n)
@@ -130,7 +145,7 @@ def mutation(permutation: list, mutation_prob: float, n: int) -> list:
     """
     rnd = random.random()   # picking a random number between 0 and 1
     if rnd < mutation_prob:     # checking if mutation is allowed
-        loci1 = random.randint(0, n - 1) # WHY N-2 AND NOT N-1
+        loci1 = random.randint(0, n - 1)
         loci2 = random.randint(0, n - 1)    # picking two mutation points in each chromosome
         while loci2 == loci1:
             loci2 = random.randint(0, n - 1)
@@ -147,22 +162,33 @@ def selection(population: list, n: int) -> list:
     :param n: The number of queens to be placed on the chessboard
     :return: best hundred of the population
     """
-    population.sort(key=operator.itemgetter(n), reverse=True)     # ERROR IS IN THIS LINE
+    population.sort(key=operator.itemgetter(n), reverse=True)
     population = population[:len(population) - 2]
     return population
 
 
 def main():
-    n = int(input("Enter the value of n"))
-    recomb_prob = float(input("Enter the value of recombination probability"))
-    mutation_prob = float(input("Enter the value of mutation probability"))
+    print("Enter the value of n")
+    n = int(input())
+    print("Enter the value of recombination probability")
+    recomb_prob = float(input())
+    print("Enter the value of mutation probability")
+    mutation_prob = float(input())
 
     population = []
     population_gen(population, n)
     while True:
-        crossover_val = crossover_sel(population)
+        crossover_val = crossover_sel(population, n)
+        print("Crossover parents")
+        print(crossover_val)
         crossover_pop = crossover(crossover_val, recomb_prob, n)
+        print("Crossover complete.")
+        print("Crossover children")
+        print(crossover_pop)
         children = mutation(crossover_pop, mutation_prob, n)
+        print("Mutation complete.")
+        print("Mutated children")
+        print(children)
         i = 0
         while i != 2:
             population.append(children[i])
