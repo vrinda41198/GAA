@@ -185,13 +185,13 @@ def main():
         print(crossover_pop)
         children = mutation(crossover_pop, mutation_prob, n)
         print("Mutation complete.")
-        print("Mutated children")
-        print(children)
         i = 0
         while i != 2:
             population.append(children[i])
             i += 1
         population = calculatefitness(population,n)
+        print("Mutated children")
+        print(population[100],population[101])
         population = selection(population, n)
 
         
