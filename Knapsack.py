@@ -41,7 +41,8 @@ def calculatefitness(population: list, args: dict, n: int) -> list:
         if population[i][n] == -1:    # calculate fitness (total value) of set of chosen items if not already calculated
             population[i][n] = 0
             for j in range(0, n):
-                population[i][n] += (population[i] * args[j][1])
+                if population[i][j] == 1:
+                    population[i][n] += args[j][1]
     return population
 
 
