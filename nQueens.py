@@ -66,10 +66,9 @@ def calculatefitness(population: list, n: int) -> list:
 def population_gen(population: list, n: int):
     """
     Initial population generation
-    :param population: initial population of chromosomes
-    :param count: count of the generation created
+    :param population: Initial population of chromosomes
     :param n: The number of queens to be placed on the chessboard
-    :return: fittest two chromosomes out of random five to be sent for crossover.
+    :return: Fittest two chromosomes out of random five to be sent for crossover.
     """
     for i in range(0, 100):
         chrom = random_chrom(n)
@@ -79,9 +78,9 @@ def population_gen(population: list, n: int):
 
 def crossover_sel(population: list, n: int) -> list:
     """
-    :param population: population of chromosomes
+    :param population: Population of chromosomes
     :param n: The number of queens to be placed on the chessboard
-    :return: chromosomes selected for crossover
+    :return: Chromosomes selected for crossover
     """
     temp_population = []
     temp_index = []
@@ -101,10 +100,10 @@ def crossover_sel(population: list, n: int) -> list:
 
 def crossover(parents: list, recomb_prob: float, n: int) -> list:
     """
-    :param parents: list of chromosomes involved in crossover
+    :param parents: List of chromosomes involved in crossover
     :param recomb_prob: Recombination probability
     :param n: The number of queens to be placed on the chessboard
-    :return: children created by crossover
+    :return: Children created by crossover
     """
     rnd = random.random()  # picking a random number between 0 and 1
     index = random.randint(0, n-1)
@@ -136,12 +135,12 @@ def crossover(parents: list, recomb_prob: float, n: int) -> list:
     return parents
 
 
-def mutation(permutation: list, mutation_prob: float, n: int) -> list:
+def mutation(population: list, mutation_prob: float, n: int) -> list:
     """"
-    :param permutation: chromosome post recombination
-    :param mutation_prob: mutation probability
+    :param population: Chromosome post recombination
+    :param mutation_prob: Mutation probability
     :param n: The number of queens to be placed on the chessboard
-    :return: mutated chromosome
+    :return: Mutated chromosome
     """
     rnd = random.random()   # picking a random number between 0 and 1
     if rnd < mutation_prob:     # checking if mutation is allowed
@@ -149,18 +148,18 @@ def mutation(permutation: list, mutation_prob: float, n: int) -> list:
         loci2 = random.randint(0, n - 1)    # picking two mutation points in each chromosome
         while loci2 == loci1:
             loci2 = random.randint(0, n - 1)
-        result = copy.deepcopy(permutation)
+        result = copy.deepcopy(population)
         result[0][loci1], result[0][loci2] = result[0][loci2], result[0][loci1]
         result[1][loci1], result[1][loci2] = result[1][loci2], result[1][loci1]     # performing swap mutation
         return result
-    return permutation  # returning unmutated population in case mutation does not occur
+    return population  # returning unmutated population in case mutation does not occur
 
 
 def selection(population: list, n: int) -> list:
     """
-    :param population: chromosome population post crossover and mutation
+    :param population: Chromosome population post crossover and mutation
     :param n: The number of queens to be placed on the chessboard
-    :return: best hundred of the population
+    :return: Best hundred of the population
     """
     population.sort(key=operator.itemgetter(n), reverse=True)
     population = population[:len(population) - 2]

@@ -6,10 +6,11 @@ fitnessNumber = 0
 termination = 25
 
 
-def calculatefitness(population: list, n: int) -> list:
+def calculatefitness(population: list, args: dict, n: int) -> list:
     """
     :param population: A list of chromosomes
-    :param n: The total number of items in the complete list
+    :param args: Info regarding weight and value of each item
+    :param n: The total number of items available
     :return: The list of chromosomes with their fitness stored at the end of each chromosome
     """
     for i in range(0, len(population)):
@@ -24,7 +25,8 @@ def calculatefitness(population: list, n: int) -> list:
 def cal_weight(chrom: list, args: dict, n: int) -> float:
     """
     :param chrom: one chromosome
-    :param args: info regarding weight and value of each item
+    :param args: Info regarding weight and value of each item
+    :param n: The total number of items available
     :return: total weight of chromosome
     """
     wt = 0
@@ -33,13 +35,23 @@ def cal_weight(chrom: list, args: dict, n: int) -> float:
     return wt
 
 
-def population_gen(population: list, count: int, n: int) -> list:
+def population_gen(population: list, args: dict, total_weight: float, n: int) -> list:
     """
     Initial population generation
     :param population: initial population of chromosomes
-    :param count: count of the generation created
-    :param n: The number of queens to be placed on the chessboard
-    :return: fittest two chromosomes out of random five to be sent for crossover.
+    :param args: Info regarding weight and value of each item
+    :param total_weight: Total weight capacity of knapsack
+    :param n: The total number of items available
+    :return: Fittest two chromosomes out of random five to be sent for crossover.
+    """
+    pass
+
+
+def crossover_sel(population: list, n: int) -> list:
+    """
+    :param population: population of chromosomes
+    :param n: The total number of items available
+    :return: Chromosomes selected for crossover
     """
     pass
 
@@ -48,27 +60,27 @@ def crossover(parents: list, recomb_prob: float, n: int) -> list:
     """
     :param parents: list of chromosomes involved in crossover
     :param recomb_prob: Recombination probability
-    :param n: The number of queens to be placed on the chessboard
+    :param n: The total number of items available
     :return: children created by crossover
     """
     pass
 
 
-def mutation(permutation: list, mutation_prob: float, n: int) -> list:
+def mutation(population: list, mutation_prob: float, n: int) -> list:
     """"
-    :param permutation: chromosome post recombination
-    :param mutation_prob: mutation probability
-    :param n: The number of queens to be placed on the chessboard
-    :return: mutated chromosome
+    :param population: Chromosome post recombination
+    :param mutation_prob: Mutation probability
+    :param n: The total number of items available
+    :return: Mutated chromosome
     """
     pass
 
 
 def selection(population: list, n: int) -> list:
     """
-    :param population: chromosome population post crossover and mutation
-    :param n: The number of queens to be placed on the chessboard
-    :return: best hundred of the population
+    :param population: Chromosome population post crossover and mutation
+    :param n: The total number of items available
+    :return: Best hundred of the population
     """
     pass
 
