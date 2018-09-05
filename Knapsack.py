@@ -133,7 +133,15 @@ def mutation(population: list, mutation_prob: float, n: int) -> list:
     :param n: The total number of items available
     :return: Mutated chromosome
     """
-    pass
+    if random.randint(0, 10) < mutation_prob*10:
+        for i in range(0, len(population)):
+            x = random.randint(0, n-1)
+            if population[i][x]==0:
+                population[i][x]=1
+            else:
+                population[i][x]=0
+
+    return population
 
 
 def selection(population: list, n: int) -> list:
