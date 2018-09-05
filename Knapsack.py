@@ -199,8 +199,14 @@ def main():
     population_gen(population, args, total_weight, n)
     while True:
         crossover_val = crossover_sel(population, n)
+        print("Crossover parents:")
+        print(crossover_val)
         crossover_pop = crossover(crossover_val, recomb_prob, args, n)
+        print("Crossover children:")
+        print(crossover_pop)
         children = mutation(crossover_pop, mutation_prob, n)
+        print("Mutated children:")
+        print(children)
         i = 0
         while i != 2:
             population.append(children[i])
