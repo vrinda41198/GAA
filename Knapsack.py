@@ -31,6 +31,7 @@ def random_chrom(args: dict, total_weight: float, n: int) -> list:
 
 def calculatefitness(population: list, args: dict, n: int) -> list:
     """
+    Calculating fitness value
     :param population: A list of chromosomes
     :param args: Info regarding weight and value of each item
     :param n: The total number of items available
@@ -46,6 +47,7 @@ def calculatefitness(population: list, args: dict, n: int) -> list:
 
 def cal_weight(chrom: list, args: dict, n: int) -> float:
     """
+    Calculating total weight of chosen items
     :param chrom: one chromosome
     :param args: Info regarding weight and value of each item
     :param n: The total number of items available
@@ -74,6 +76,7 @@ def population_gen(population: list, args: dict, total_weight: float, n: int):
 
 def crossover_sel(population: list, n: int) -> list:
     """
+    Selecting parents for crossover
     :param population: population of chromosomes
     :param n: The total number of items available
     :return: Chromosomes selected for crossover
@@ -96,6 +99,7 @@ def crossover_sel(population: list, n: int) -> list:
 
 def crossover(parents: list, recomb_prob: float, args: dict, n: int) -> list:
     """
+    One point crossover
     :param parents: list of chromosomes involved in crossover
     :param recomb_prob: Recombination probability
     :param args: Info regarding weight and value of each item
@@ -128,24 +132,26 @@ def crossover(parents: list, recomb_prob: float, args: dict, n: int) -> list:
 
 def mutation(population: list, mutation_prob: float, n: int) -> list:
     """"
+    Bit flipping mutation in created children
     :param population: Chromosome post recombination
     :param mutation_prob: Mutation probability
     :param n: The total number of items available
     :return: Mutated chromosome
     """
-    if random.randint(0, 10) < mutation_prob*10:
+    if random.randint(0, 10) < mutation_prob * 10:
         for i in range(0, len(population)):
             x = random.randint(0, n-1)
-            if population[i][x]==0:
-                population[i][x]=1
+            if population[i][x] == 0:
+                population[i][x] = 1
             else:
-                population[i][x]=0
+                population[i][x] = 0
 
     return population
 
 
 def selection(population: list, n: int) -> list:
     """
+    Selecting fittest 100 chromosomes
     :param population: Chromosome population post crossover and mutation
     :param n: The total number of items available
     :return: Best hundred of the population
