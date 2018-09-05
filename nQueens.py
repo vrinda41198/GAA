@@ -45,7 +45,7 @@ def calculatefitness(population: list, n: int) -> list:
 
                         collision = collision + 1
 
-            population[i][n] = 1/(collision + 0.1)
+            population[i][n] = round((1/(collision + 0.1)),2)
             fitnessNumber += 1  # number of fitness functions calculated
 
     if fitnessNumber >= termination:  # termination condition
