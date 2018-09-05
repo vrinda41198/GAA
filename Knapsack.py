@@ -175,10 +175,14 @@ def selection(population: list, n: int) -> list:
 def main():
     population = []
     count = 1
-    n = int(input("Enter the number of items"))
-    recomb_prob = float(input("Enter the value of recombination probability"))
-    mutation_prob = float(input("Enter the value of mutation probability"))
-    total_weight = float(input("Enter the total weight capacity"))
+    print("Enter the number of items")
+    n = int(input())
+    print("Enter the value of recombination probability")
+    recomb_prob = float(input())
+    print("Enter the value of mutation probability")
+    mutation_prob = float(input())
+    print("Enter the total weight capacity")
+    total_weight = float(input())
     args = {}
     for i in range(0, n):
         print("Enter the weight of item", i+1)

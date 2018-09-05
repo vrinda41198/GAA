@@ -194,9 +194,9 @@ def main():
         while i != 2:
             population.append(children[i])
             i += 1
-        population = calculatefitness(population,n)
+        population = calculatefitness(population, n)
         print("Mutated children")
-        print(population[100],population[101])
+        print(population[100], population[101])
         population = selection(population, n)
 
         
