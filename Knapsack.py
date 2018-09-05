@@ -9,10 +9,16 @@ termination = 25
 def calculatefitness(population: list, n: int) -> list:
     """
     :param population: A list of chromosomes
-    :param n: The number of queens to be placed on the chessboard
+    :param n: The total number of items in the complete list
     :return: The list of chromosomes with their fitness stored at the end of each chromosome
     """
-    pass
+    for i in range(0, len(population)):
+        if population[i][n] == -1:    # calculate fitness (total value) of set of chosen items if not already calculated
+            population[i][n] = 0
+            for j in range(0, n):
+                if population[i][j] == 1:       # add the value of an item to the fitness func if it's chosen
+                    population[i][n] += args[j][1]
+    return population
 
 
 def cal_weight(chrom: list, args: dict, n: int) -> float:
@@ -83,7 +89,7 @@ def main():
         args[i].append((item_wt, item_val))     # args = { index : (item_wt,item_val) }
     population_gen(population, args, total_weight, n)
     while True:
-        crossover_val = crossover_sel(population)
+        crossover_val = crossover_sel(population, n)
         crossover_pop = crossover(crossover_val, recomb_prob, n)
         children = mutation(crossover_pop, mutation_prob, n)
         i = 0
