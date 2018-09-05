@@ -191,7 +191,7 @@ def main():
         item_wt = float(input())
         print("Enter the value of item", i + 1)
         item_val = float(input())
-        args[i].append((item_wt, item_val))     # args = { index : (item_wt,item_val) }
+        args[i] = (item_wt, item_val)     # args = { index : (item_wt,item_val) }
     population_gen(population, args, total_weight, n)
     while True:
         crossover_val = crossover_sel(population, n)
