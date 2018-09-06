@@ -101,6 +101,13 @@ def main():
     recomb_prob = float(input("Enter the value of recombination probability"))
     mutation_prob = float(input("Enter the value of mutation probability"))
 
+    args = {a: (0,0) for a in range(n)}     # dictionary with key as the index of item and value as a tuple of (weight, value)
+
+    for i in range(0, n-1):
+        w = int(input("Enter the weight for item " + str(i)))
+        v = int(input("Enter the value for item " + str(i)))
+        args[i] = (w, v)
+
     population = []
     count = 1
     while True:
