@@ -19,12 +19,12 @@ def random_chrom(args: dict, total_weight: float, n: int) -> list:
     while True:
         temp = random.randint(0, 1)
         chrom.append(temp)   # generating genes randomly for the chromosome
-        #j += 1
-        """if j == n:
+        j += 1
+        if j == n:
             if cal_weight(chrom, args, n) <= total_weight:
                 break
             else:
-                j = 0"""
+                j = 0
     chrom.append(-1)   # initialising fitness value
     return chrom
 
@@ -41,6 +41,8 @@ def calculatefitness(population: list, args: dict, n: int) -> list:
         if population[i][n] == -1:    # calculate fitness (total value) of set of chosen items if not already calculated
             population[i][n] = 0
             for j in range(0, n):
+                if population[i][j] == 1:
+                    population[i][n] += args[j][1]
                 if population[i][j] == 1:       # add the value of an item to the fitness func if it's chosen
                     population[i][n] += args[j][1]
     return population
@@ -49,6 +51,7 @@ def calculatefitness(population: list, args: dict, n: int) -> list:
 def cal_weight(chrom: list, args: dict, n: int) -> float:
     """
     Calculating total weight of chosen items
+    Calculating weight of the sack
     :param chrom: one chromosome
     :param args: Info regarding weight and value of each item
     :param n: The total number of items available
@@ -69,7 +72,7 @@ def population_gen(population: list, args: dict, total_weight: float, n: int):
     :param n: The total number of items available
     :return: Fittest two chromosomes out of random five to be sent for crossover.
     """
-    for i in range(0, 100):
+    for i in range(0, 500):
         chrom = random_chrom(args, total_weight, n)
         population.append(chrom)  # generating 100 random chromosomes as initial population
         population = calculatefitness(population, args, n)  # calculating fitness function
@@ -86,7 +89,7 @@ def crossover_sel(population: list, n: int) -> list:
     temp_index = []
     i = 0
     while i < 5:
-        j = random.randint(0, 99)
+        j = random.randint(0, 499)
         if j not in temp_index:
             temp_index.append(j)
             temp_population.append(population[j])  # five randomly chosen chromosomes
@@ -100,6 +103,7 @@ def crossover_sel(population: list, n: int) -> list:
 
 def crossover(parents: list, recomb_prob: float, args: dict, n: int) -> list:
     """
+    Crossover between parents
     One point crossover
     :param parents: list of chromosomes involved in crossover
     :param recomb_prob: Recombination probability
@@ -133,6 +137,7 @@ def crossover(parents: list, recomb_prob: float, args: dict, n: int) -> list:
 
 def mutation(population: list, mutation_prob: float, n: int) -> list:
     """"
+    Mutation in children
     Bit flipping mutation in created children
     :param population: Chromosome post recombination
     :param mutation_prob: Mutation probability
@@ -152,6 +157,7 @@ def mutation(population: list, mutation_prob: float, n: int) -> list:
 
 def selection(population: list, n: int) -> list:
     """
+    Selecting best 500 chromosomes
     Selecting fittest 100 chromosomes
     :param population: Chromosome population post crossover and mutation
     :param n: The total number of items available
@@ -201,8 +207,14 @@ def main():
     print("%%% check if pop_gen working%%%" )
     while True:
         crossover_val = crossover_sel(population, n)
+        print("Crossover parents:")
+        print(crossover_val)
         crossover_pop = crossover(crossover_val, recomb_prob, args, n)
+        print("Crossover children:")
+        print(crossover_pop)
         children = mutation(crossover_pop, mutation_prob, n)
+        print("Mutated children:")
+        print(children)
         i = 0
         while i != 2:
             population.append(children[i])
