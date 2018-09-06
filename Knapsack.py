@@ -19,12 +19,12 @@ def random_chrom(args: dict, total_weight: float, n: int) -> list:
     while True:
         temp = random.randint(0, 1)
         chrom.append(temp)   # generating genes randomly for the chromosome
-        j += 1
-        if j == n:
+        #j += 1
+        """if j == n:
             if cal_weight(chrom, args, n) <= total_weight:
                 break
             else:
-                j = 0
+                j = 0"""
     chrom.append(-1)   # initialising fitness value
     return chrom
 
@@ -196,8 +196,9 @@ def main():
         item_wt = float(input())
         print("Enter the value of item", i + 1)
         item_val = float(input())
-        args[i].append((item_wt, item_val))     # args = { index : (item_wt,item_val) }
+        args[i] = (item_wt, item_val)     # args = { index : (item_wt,item_val) }
     population_gen(population, args, total_weight, n)
+    print("%%% check if pop_gen working%%%" )
     while True:
         crossover_val = crossover_sel(population, n)
         crossover_pop = crossover(crossover_val, recomb_prob, args, n)
