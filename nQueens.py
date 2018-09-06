@@ -102,7 +102,7 @@ def crossover_sel(population: list, n: int) -> list:
 
 def crossover(parents: list, recomb_prob: float, n: int) -> list:
     """
-    Crossover between parents
+    Cut and Crossfill crossover between parents
     :param parents: List of chromosomes involved in crossover
     :param recomb_prob: Recombination probability
     :param n: The number of queens to be placed on the chessboard
@@ -139,7 +139,7 @@ def crossover(parents: list, recomb_prob: float, n: int) -> list:
 
 def mutation(population: list, mutation_prob: float, n: int) -> list:
     """"
-    Mutation in created children
+    Swap mutation in created children
     :param population: Chromosome post recombination
     :param mutation_prob: Mutation probability
     :param n: The number of queens to be placed on the chessboard
@@ -160,7 +160,7 @@ def mutation(population: list, mutation_prob: float, n: int) -> list:
 
 def selection(population: list, n: int) -> list:
     """
-    Selecting top 100 chromosomes
+    Selecting fittest 100 chromosomes
     :param population: Chromosome population post crossover and mutation
     :param n: The number of queens to be placed on the chessboard
     :return: Best hundred of the population
