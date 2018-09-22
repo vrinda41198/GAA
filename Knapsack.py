@@ -14,17 +14,15 @@ def random_chrom(args: dict, total_weight: float, n: int) -> list:
     :param n: The total number of items available
     :return: randomly generated chromosome.
     """
-    chrom = []  # one chromosome
-    j = 0
+
     while True:
-        temp = random.randint(0, 1)
-        chrom.append(temp)   # generating genes randomly for the chromosome
-        j += 1
-        if j == n:
-            if cal_weight(chrom, args, n) <= total_weight:
-                break
-            else:
-                j = 0
+        chrom = []  # one chromosome
+        for i in range (0, n):
+            temp = random.randint(0, 1)
+            chrom.append(temp)   # generating genes randomly for the chromosome
+        if cal_weight(chrom, args, n) <= total_weight:
+            break
+
     chrom.append(-1)   # initialising fitness value
     return chrom
 
