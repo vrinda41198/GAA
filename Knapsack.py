@@ -204,21 +204,26 @@ def selection(population: list, n: int) -> list:
 
 
 def check_weight(children: list, args: dict, total_weight: float, n: int) -> list:
+    """
+    :param children: Overweight children exceeding weight constraints
+    :param args: Info regarding weight and value of each item
+    :param total_weight: Total weight capacity of knapsack
+    :param n: The total number of items available
+    :return: Chromosomes fitted into constraints
+    """
     fixed_children = []
     for i in range(0, 2):
         temp_weight = 0
         if cal_weight(children[i], args, n) > total_weight:
             for j in range(0, n):
-                temp_weight += (children[i][j] * args[i][0])
+                temp_weight += (children[i][j] * args[j][0])
                 if temp_weight > total_weight:
                     for k in range(j, n):
                         children[i][k] = 0
-                        print(children[i])
 
             children[i][n] = -1
         fixed_children.append(children[i])
     fixed_children = calculatefitness(fixed_children, args, n)
-    exit()
     return fixed_children
 
 
