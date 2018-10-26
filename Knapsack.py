@@ -14,17 +14,15 @@ def random_chrom(args: dict, total_weight: float, n: int) -> list:
     :param n: The total number of items available
     :return: randomly generated chromosome.
     """
-    chrom = []  # one chromosome
-    j = 0
+
     while True:
-        temp = random.randint(0, 1)
-        chrom.append(temp)   # generating genes randomly for the chromosome
-        j += 1
-        if j == n:
-            if cal_weight(chrom, args, n) <= total_weight:
-                break
-            else:
-                j = 0
+        chrom = []  # one chromosome
+        for i in range (0, n):
+            temp = random.randint(0, 1)
+            chrom.append(temp)   # generating genes randomly for the chromosome
+        if cal_weight(chrom, args, n) <= total_weight:
+            break
+
     chrom.append(-1)   # initialising fitness value
     return chrom
 
@@ -42,6 +40,8 @@ def calculatefitness(population: list, args: dict, n: int) -> list:
             population[i][n] = 0
             for j in range(0, n):
                 if population[i][j] == 1:
+                    population[i][n] += args[j][1]
+                if population[i][j] == 1:       # add the value of an item to the fitness func if it's chosen
                     population[i][n] += args[j][1]
     return population
 
@@ -142,13 +142,13 @@ def mutation(population: list, mutation_prob: float, n: int) -> list:
     :param n: The total number of items available
     :return: Mutated chromosome
     """
-    if random.randint(0, 10) < mutation_prob * 10:
-        for i in range(0, len(population)):
-            x = random.randint(0, n-1)
-            if population[i][x] == 0:
-                population[i][x] = 1
-            else:
-                population[i][x] = 0
+    for i in range(0, len(population)):
+        for j in range(0, n-1):
+            if random.randint(0, 10) < mutation_prob * 10:
+                if population[i][j] == 0:
+                    population[i][j] = 1
+                else:
+                    population[i][j] = 0
 
     return population
 
@@ -202,6 +202,7 @@ def main():
         item_val = float(input())
         args[i] = (item_wt, item_val)     # args = { index : (item_wt,item_val) }
     population_gen(population, args, total_weight, n)
+    print("%%% check if pop_gen working%%%" )
     while True:
         crossover_val = crossover_sel(population, n)
         print("Crossover parents:")
