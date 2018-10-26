@@ -33,6 +33,7 @@ def calculatefitness(population: list, n: int) -> list:
     :return: The list of chromosomes with their fitness stored at the end of each chromosome
     """
     global fitnessNumber
+    global termination
     for i in range(0, len(population)):
 
         if population[i][n] == -1:  # i is one chromosome

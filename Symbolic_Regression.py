@@ -40,4 +40,5 @@ def fitness_evaluation(chrom: list, x: list, y: list) -> float:
     pass
 
 
-def selection()
+def selection() :
+    pass
