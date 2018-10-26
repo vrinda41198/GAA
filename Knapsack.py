@@ -166,7 +166,7 @@ def mutation(population: list, mutation_prob: float, n: int) -> list:
                     population[i][j] = 1
                 else:
                     population[i][j] = 0
-
+        population[i][n] = -1
     return population
 
 
