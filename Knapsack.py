@@ -41,7 +41,6 @@ def calculatefitness(population: list, args: dict, n: int) -> list:
     # global fitnessNumber
     global termination
     for i in range(0, len(population)):
-            # calculate fitness (total value) of set of chosen items if not already calculated
             population[i][n] = 0
             for j in range(0, n):
                 if population[i][j] == 1:       # add the value of an item to the fitness func if it's chosen
