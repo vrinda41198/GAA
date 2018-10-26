@@ -205,7 +205,6 @@ def selection(population: list, n: int) -> list:
 
 def check_weight(children: list, args: dict, total_weight: float, n: int) -> list:
     fixed_children = []
-    print("Ssadaedwer", children)
     for i in range(0, 2):
         temp_weight = 0
         if cal_weight(children[i], args, n) > total_weight:
@@ -218,7 +217,6 @@ def check_weight(children: list, args: dict, total_weight: float, n: int) -> lis
 
             children[i][n] = -1
         fixed_children.append(children[i])
-        print("aaaaaaAA", fixed_children)
     fixed_children = calculatefitness(fixed_children, args, n)
     exit()
     return fixed_children
