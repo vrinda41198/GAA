@@ -41,7 +41,7 @@ def calculatefitness(population: list, args: dict, n: int) -> list:
     # global fitnessNumber
     global termination
     for i in range(0, len(population)):
-        if population[i][n] == -1:    # calculate fitness (total value) of set of chosen items if not already calculated
+            # calculate fitness (total value) of set of chosen items if not already calculated
             population[i][n] = 0
             for j in range(0, n):
                 if population[i][j] == 1:       # add the value of an item to the fitness func if it's chosen
@@ -221,7 +221,7 @@ def check_weight(children: list, args: dict, total_weight: float, n: int) -> lis
                     for k in range(j, n):
                         children[i][k] = 0
 
-            children[i][n] = -1
+
         fixed_children.append(children[i])
     fixed_children = calculatefitness(fixed_children, args, n)
     return fixed_children
