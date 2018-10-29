@@ -1,4 +1,8 @@
 import random
+import math
+
+u = 0.32
+v = 0.80
 
 def randomxy(x: list, y: list):
     """
@@ -41,7 +45,7 @@ def fitness_evaluation(chrom: list, x: list, y: list) -> float:
     """
     pass
 
-def parent_selection(population: list, x: int, y: int) -> list
+def parent_selection(population: list) -> list
     """
     To select parents for crossover using overselection
     :param population:
@@ -50,10 +54,25 @@ def parent_selection(population: list, x: int, y: int) -> list
     """
     group1 = []
     group2 = []
-    
+    temp_population = []
+    parents = []
 
+    index1 = math.floor(u*len(population))
 
+    population.sort(key=operator.itemgetter(n), reverse=True)
+    group1 = population[:index1]
+    group2 = population[index1+1:]
 
+    index2 = math.floor(v*len(group1))
+    index3 = math.floor((1-v)*len(group2))
+
+    temp_population.append(group1[:index2])
+    temp_population.append(group2[:index3])
+    temp_population.sort(key=operator.itemgetter(n), reverse=True)
+
+    parents = temp_population[:2]
+
+    return parents
 
 def subtree_recomb(parents: list, recomb_prob: float) -> list:
     """
