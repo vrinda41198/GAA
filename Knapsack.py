@@ -1,12 +1,7 @@
 import random
 import operator
 
-gen_no = 0
-termination = 25
-past_gen = []   # stores the previous generation
-
-# fitnessNumber = 0
-# termination = 10000
+gen_no = 0  # Number of generations created
 
 
 def random_chrom(args: dict, total_weight: float, n: int) -> list:
@@ -38,26 +33,12 @@ def calculatefitness(population: list, args: dict, n: int) -> list:
     :param n: The total number of items available
     :return: The list of chromosomes with their fitness stored at the end of each chromosome
     """
-    # global fitnessNumber
-    global termination
     for i in range(0, len(population)):
             population[i][n] = 0
             for j in range(0, n):
                 if population[i][j] == 1:       # add the value of an item to the fitness func if it's chosen
                     population[i][n] += args[j][1]
-            # fitnessNumber += 1  # number of fitness functions calculated
 
-    '''if fitnessNumber >= termination:  # termination condition
-        population.sort(key=operator.itemgetter(n), reverse=True)
-        print("The final answer is")
-        print("Chromosome:")
-        chrom = []
-        for i in range(0, n):
-            chrom.append(population[0][i])
-        print(chrom)
-        print("Fitness value:")
-        print(population[0][n])
-        exit()'''
     return population
 
 
@@ -72,7 +53,7 @@ def cal_weight(chrom: list, args: dict, n: int) -> float:
     """
     wt = 0
     for i in range(0, n):
-        wt += (chrom[i] * args[i][0])
+        wt += (chrom[i] * args[i][0])   # finding total value of picked chromosome
     return wt
 
 
@@ -116,8 +97,7 @@ def crossover_sel(population: list, n: int) -> list:
 
 def crossover(parents: list, recomb_prob: float, args: dict, n: int) -> list:
     """
-    Crossover between parents
-    One point crossover
+    One point crossover between parents
     :param parents: list of chromosomes involved in crossover
     :param recomb_prob: Recombination probability
     :param args: Info regarding weight and value of each item
@@ -150,7 +130,6 @@ def crossover(parents: list, recomb_prob: float, args: dict, n: int) -> list:
 
 def mutation(population: list, mutation_prob: float, n: int) -> list:
     """"
-    Mutation in children
     Bit flipping mutation in created children
     :param population: Chromosome post recombination
     :param mutation_prob: Mutation probability
@@ -160,19 +139,18 @@ def mutation(population: list, mutation_prob: float, n: int) -> list:
     for i in range(0, len(population)):
         for j in range(0, n):
             k = random.randint(0, 10)
-            if k < mutation_prob * 10:
+            if k < mutation_prob * 10:  # Checking if random number picked is less than mutation probability
                 if population[i][j] == 0:
-                    population[i][j] = 1
+                    population[i][j] = 1    # Bit flipping
                 else:
                     population[i][j] = 0
-        population[i][n] = -1
+        population[i][n] = -1   # Adding -1 as initial fitness
     return population
 
 
 def selection(population: list, n: int) -> list:
     """
     Selecting best 500 chromosomes
-    Selecting fittest 100 chromosomes
     :param population: Chromosome population post crossover and mutation
     :param n: The total number of items available
     :return: Best hundred of the population
@@ -181,7 +159,6 @@ def selection(population: list, n: int) -> list:
     global past_gen
     population.sort(key=operator.itemgetter(n), reverse=True)
     population = population[:len(population) - 2]   # removing least fittest two from population
-    # if population == past_gen:  # checking if previous generation was same as current generation
     gen_no += 1
     if gen_no == 200000:    # termination condition
         print("The final answer is")
@@ -193,17 +170,12 @@ def selection(population: list, n: int) -> list:
         print("Fitness value:")
         print(population[0][n])
         exit()
-    '''else:
-        gen_no = 0
-        past_gen = population'''
     return population
-    # population.sort(key=operator.itemgetter(n), reverse=True)
-    # population = population[:len(population) - 2]   # removing least fittest two from population
-    # return population
 
 
 def check_weight(children: list, args: dict, total_weight: float, n: int) -> list:
     """
+    Checking if any of the created children exceed weight constraint and fixing it.
     :param children: Overweight children exceeding weight constraints
     :param args: Info regarding weight and value of each item
     :param total_weight: Total weight capacity of knapsack
@@ -213,16 +185,14 @@ def check_weight(children: list, args: dict, total_weight: float, n: int) -> lis
     fixed_children = []
     for i in range(0, 2):
         temp_weight = 0
-        if cal_weight(children[i], args, n) > total_weight:
+        if cal_weight(children[i], args, n) > total_weight:  # Checks if created child exceeds weight constraint
             for j in range(0, n):
                 temp_weight += (children[i][j] * args[j][0])
-                if temp_weight > total_weight:
+                if temp_weight > total_weight:  # finding point at which weight constraint is exceeded
                     for k in range(j, n):
-                        children[i][k] = 0
-
-
+                        children[i][k] = 0  # sets values after weight exceeding point as 0
         fixed_children.append(children[i])
-    fixed_children = calculatefitness(fixed_children, args, n)
+    fixed_children = calculatefitness(fixed_children, args, n)  # finding fitness of fixed children
     return fixed_children
 
 
@@ -246,6 +216,7 @@ def main():
         item_val = float(input())
         args[i] = (item_wt, item_val)     # args = { index : (item_wt,item_val) }
     population_gen(population, args, total_weight, n)
+
     while True:
         crossover_val = crossover_sel(population, n)
         crossover_pop = crossover(crossover_val, recomb_prob, args, n)
