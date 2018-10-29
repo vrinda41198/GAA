@@ -78,7 +78,7 @@ def population_gen(population: list, n: int):
         population = calculatefitness(population, n)    # calculating fitness function
 
 
-def crossover_sel(population: list, n: int) -> list:
+def parent_sel(population: list, n: int) -> list:
     """
     Selecting parents for crossover
     :param population: Population of chromosomes

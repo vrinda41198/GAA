@@ -50,9 +50,7 @@ def parent_selection(population: list, x: int, y: int) -> list
     """
     group1 = []
     group2 = []
-    
-
-
+    return population
 
 
 def subtree_recomb(parents: list, recomb_prob: float) -> list:
