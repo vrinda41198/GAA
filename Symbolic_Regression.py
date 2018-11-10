@@ -1,4 +1,5 @@
 import random
+import operator
 import math
 
 u = 0.32
@@ -45,7 +46,7 @@ def fitness_evaluation(chrom: list, x: list, y: list) -> float:
     """
     pass
 
-def parent_selection(population: list) -> list
+def parent_selection(population: list) -> list:
     """
     To select parents for crossover using overselection
     :param population:
