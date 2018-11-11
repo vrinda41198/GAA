@@ -46,17 +46,14 @@ def fitness_evaluation(chrom: list, x: list, y: list) -> float:
     """
     pass
 
-def parent_selection(population: list) -> list:
+def parent_selection(population: list, n: int) -> list:
     """
     To select parents for crossover using overselection
     :param population:
     :param x:
     :param y:
     """
-    group1 = []
-    group2 = []
     temp_population = []
-    parents = []
 
     index1 = math.floor(u*len(population))
 
