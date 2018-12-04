@@ -12,7 +12,8 @@ def randomxy(x: list, y: list):
     :param y:
     :return:
     """
-    pass
+    data = []
+
 
 
 def parse_gen(chrom: list, func_set: dict, term_set: dict):
@@ -44,7 +45,7 @@ def fitness_evaluation(chrom: list, x: list, y: list) -> float:
     :param y:
     :return:
     """
-    pass
+
 
 def parent_selection(population: list, n: int) -> list:
     """
@@ -94,4 +95,15 @@ def subtree_recomb(parents: list, recomb_prob: float) -> list:
 
 
 def selection() :
+    """
+
+    :return:
+    """
     pass
+
+def main():
+
+
+
+
+main()
